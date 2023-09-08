@@ -11,7 +11,7 @@ const listAll = async (req, res) => {
     }
 };
 
-
+// retorna la lista de peliculos por owner
 const listByID = async (id) => {
     try {
       const listMoviesById  = await movieList.find({ owner: id });
@@ -22,7 +22,19 @@ const listByID = async (id) => {
     }
 };
 
-
+// actualiza la lista de peliculas por id
+const listByIdAndUpdate = async (id, req) => {
+    try {
+      const listByIdAndUpdate  = await movieList.findByIdAndUpdate(id, req.body);
+      //return 'Error:'+ owner;
+      if (!listByIdAndUpdate) {
+        return res.status(404).json({ message: 'Lista no encontrada por id '+id });
+      };
+      return listByIdAndUpdate;
+    } catch (error) {
+        return 'Error:'+ id;
+    }
+};
 
 
 const add = async (req, res) => {
@@ -37,4 +49,4 @@ const add = async (req, res) => {
     }
 };
 
-module.exports = { listAll, add, listByID }
+module.exports = { listAll, add, listByID, listByIdAndUpdate }

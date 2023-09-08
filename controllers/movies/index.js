@@ -57,8 +57,18 @@ router.delete('/list/:id/delete/:movie_id', (req, res) => {
     JSON.stringify(req.params));
 });
 
-router.put('/list/:id/rate', (req, res) => {
-    res.send("Endpoint para calificar listas de otros usuarios");
+router.put('/list/:id/rate', async(req, res) => {
+    //res.send("Endpoint para calificar listas de otros usuarios");
+    try {        
+        const id = req.params.id;
+        const UpdatelistMoviesById = await moviesMethods.listByIdAndUpdate(id, req);
+        res.status(200).json({
+            message: 'Update List of movies by owner.' + id +'.',
+            data: UpdatelistMoviesById
+        });
+    }catch (error) {
+        res.status(400).send(error);
+    }  
 });
 
 
