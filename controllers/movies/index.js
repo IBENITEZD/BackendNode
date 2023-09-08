@@ -43,7 +43,7 @@ router.get('/list/:id', async (req, res) => {
         const id = req.params.id;
         const listMoviesById = await moviesMethods.listByID(id);
         res.status(200).json({
-            message: 'List of movies by owner.' + id +'.',
+            message: 'List of movies by id.' + id +'.',
             data: listMoviesById
         });
     }catch (error) {

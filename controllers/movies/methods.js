@@ -11,10 +11,10 @@ const listAll = async (req, res) => {
     }
 };
 
-// retorna la lista de peliculos por owner
+// retorna la lista de peliculos por id
 const listByID = async (id) => {
     try {
-      const listMoviesById  = await movieList.find({ owner: id });
+      const listMoviesById  = await movieList.findById(id);
       //return 'Error:'+ owner;
       return listMoviesById;
     } catch (error) {
@@ -36,7 +36,23 @@ const listByIdAndUpdate = async (id, req) => {
     }
 };
 
+// borrar la lista de peliculas por id
+const RemoveMoviesById = async (id) => {
+    try {
+      const RemoveMovies  = await movieList.findByIdAndRemove(id);
+      //return 'Error:'+ owner;
+      if (!RemoveMovies) {
+        return res.status(404).json({ message: 'Registro no encontrado por id '+id });
+      };
+      return RemoveMovies;
+    } catch (error) {
+        return 'Error:'+ id;
+    }
+};
 
+
+
+//adiciona lista de peliculas
 const add = async (req, res) => {
     try {
         const newMovies = new movieList(req);
@@ -49,4 +65,4 @@ const add = async (req, res) => {
     }
 };
 
-module.exports = { listAll, add, listByID, listByIdAndUpdate }
+module.exports = { listAll, add, listByID, listByIdAndUpdate, RemoveMoviesById }
