@@ -14,8 +14,7 @@ const listAll = async (req, res) => {
 
 const listByID = async (id) => {
     try {
-      owner = JSON.stringify(id);
-      const listMoviesById  = await movieList.find({ owner: owner });
+      const listMoviesById  = await movieList.find({ owner: id });
       //return 'Error:'+ owner;
       return listMoviesById;
     } catch (error) {

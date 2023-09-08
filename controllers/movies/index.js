@@ -35,12 +35,12 @@ router.get('/list/all', async (req, res) => {
 
 
 router.get('/list/:id', async (req, res) => {
-    const id = JSON.stringify(req.params.id)
     /*
     res.send("Endpoint para consultar la lista de peliculas de un usuario: " + 
     JSON.stringify(req.params.id));
     */
     try {        
+        const id = req.params.id;
         const listMoviesById = await moviesMethods.listByID(id);
         res.status(200).json({
             message: 'List of movies by owner.' + id +'.',
