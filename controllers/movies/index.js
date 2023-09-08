@@ -52,9 +52,18 @@ router.get('/list/:id', async (req, res) => {
 });
 
 
-router.delete('/list/:id/delete/:movie_id', (req, res) => {
-    res.send("Endpoint para eliminar peliculas a una lista: ", 
-    JSON.stringify(req.params));
+router.delete('/list/:id/delete/:movie_id', async(req, res) => {
+    //res.send("Endpoint para eliminar peliculas a una lista: ",  JSON.stringify(req.params));
+    try {        
+        const id = req.params.id;
+        const RemoveMovies = await moviesMethods.RemoveMoviesById(id, req);
+        res.status(200).json({
+            message: 'Remove movies by id.' + id +'.',
+            data: RemoveMovies
+        });
+    }catch (error) {
+        res.status(400).send(error);
+    }  
 });
 
 router.put('/list/:id/rate', async(req, res) => {
@@ -63,7 +72,7 @@ router.put('/list/:id/rate', async(req, res) => {
         const id = req.params.id;
         const UpdatelistMoviesById = await moviesMethods.listByIdAndUpdate(id, req);
         res.status(200).json({
-            message: 'Update List of movies by owner.' + id +'.',
+            message: 'Update List of movies by id.' + id +'.',
             data: UpdatelistMoviesById
         });
     }catch (error) {
